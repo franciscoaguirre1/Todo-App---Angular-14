@@ -8,8 +8,9 @@
                             <mat-label>Add Task</mat-label>
                             <input formControlName="item" matInput>
                         </mat-form-field>
-                        <button *ngIf="!isEditEnabled" (click)="addTask()" [disabled]="todoForm.invalid" mat-raised-button color="primary">Add</button>
+                        <button *ngIf="!isEditEnabled && !editInProgress" (click)="addTask()" [disabled]="todoForm.invalid" mat-raised-button color="primary">Add</button>
                         <button *ngIf="isEditEnabled"(click)="updateTask()" [disabled]="todoForm.invalid" mat-raised-button color="primary">Update</button>
+                        <button *ngIf="editInProgress"(click)="updateInProgress()" [disabled]="todoForm.invalid" mat-raised-button color="primary">Update</button>
                     </form>
                 </mat-card>
             </div>
@@ -25,7 +26,7 @@
                               <div class="example-box" *ngFor="let item of tasks; let i = index" cdkDrag>{{item.description}}
                                 <div class="box">
                                     <button mat-icon-button color="warn" (click)="deleteTask(i)"><mat-icon>delete</mat-icon></button>
-                                    <button mat-icon-button color="primary" (click)="onEdit(item, i)"> <mat-icon>edit</mat-icon></button>
+                                    <button mat-icon-button color="primary" (click)="onEditTask(item, i)"> <mat-icon>edit</mat-icon></button>
                                 </div>
                             </div>
                             </div>
@@ -39,7 +40,7 @@
                               <div class="example-box" *ngFor="let item of inprogress; let i = index" cdkDrag>{{item.description}}
                                 <div class="box">
                                     <button mat-icon-button color="warn" (click)="deleteInProgressTask(i)"><mat-icon>delete</mat-icon></button>
-                                    <button mat-icon-button color="primary" (click)="onEdit(item, i)"> <mat-icon>edit</mat-icon></button>
+                                    <button mat-icon-button color="primary" (click)="onEditInProgress(item, i)"> <mat-icon>edit</mat-icon></button>
                                 </div>
                             </div>
                             </div>

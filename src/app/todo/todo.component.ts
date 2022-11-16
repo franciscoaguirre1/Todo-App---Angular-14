@@ -18,6 +18,7 @@ export class TodoComponent implements OnInit {
   done : Itask [] = [];
   updateIndex! : any;
   isEditEnabled : boolean = false;
+  editInProgress : boolean = false;
 
 
   constructor(private fb: FormBuilder) { }
@@ -36,10 +37,17 @@ export class TodoComponent implements OnInit {
     this.todoForm.reset();
   }
 
-  onEdit(item: Itask, i: number) {
+  onEditTask(item: Itask, i: number) {
     this.todoForm.controls['item'].setValue(item.description);
     this.updateIndex = i;
     this.isEditEnabled = true;
+    this.editInProgress = false;
+  }
+  onEditInProgress(item: Itask, i: number) {
+    this.todoForm.controls['item'].setValue(item.description);
+    this.updateIndex = i;
+    this.isEditEnabled = false;
+    this.editInProgress = true;
   }
 
   updateTask() {
@@ -48,6 +56,13 @@ export class TodoComponent implements OnInit {
     this.todoForm.reset();
     this.updateIndex = undefined;
     this.isEditEnabled = false;
+  }
+  updateInProgress() {
+    this.inprogress[this.updateIndex].description = this.todoForm.value.item;
+    this.inprogress[this.updateIndex].done = false;
+    this.todoForm.reset();
+    this.updateIndex = undefined;
+    this.editInProgress = false
   }
 
   deleteTask(i: number) {
